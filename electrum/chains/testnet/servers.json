@@ -1,0 +1,20 @@
+{
+    "testnet-seed-1.outcoin.org": {
+        "pruning": "-",
+        "s": "19208",
+        "t": "19207",
+        "version": "1.4.2"
+    },
+    "testnet-seed-2.outcoin.org": {
+        "pruning": "-",
+        "s": "19208",
+        "t": "19207",
+        "version": "1.4.2"
+    },
+    "testnet-seed-3.outcoin.org": {
+        "pruning": "-",
+        "s": "19208",
+        "t": "19207",
+        "version": "1.4.2"
+    }
+}

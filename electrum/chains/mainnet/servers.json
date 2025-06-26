@@ -1,0 +1,26 @@
+{
+    "seed-1.outcoin.org": {
+        "pruning": "-",
+        "s": "19206",
+        "t": "19205",
+        "version": "1.4.2"
+    },
+    "seed-2.outcoin.org": {
+        "pruning": "-",
+        "s": "19206",
+        "t": "19205",
+        "version": "1.4.2"
+    },
+    "seed-3.outcoin.org": {
+        "pruning": "-",
+        "s": "19206",
+        "t": "19205",
+        "version": "1.4.2"
+    },
+    "explorer.outcoin.org": {
+        "pruning": "-",
+        "s": "19206",
+        "t": "19205",
+        "version": "1.4.2"
+    }
+}

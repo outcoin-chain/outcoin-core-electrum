@@ -1,0 +1,24 @@
+# If you want Outcoin to appear in a Linux app launcher ("start menu"), install this by doing:
+# sudo desktop-file-install electrum.desktop
+# Note: This assumes $HOME/.local/bin is in your $PATH
+
+[Desktop Entry]
+Comment=Lightweight Outcoin Client
+Exec=electrum %u
+GenericName[en_US]=Outcoin Wallet
+GenericName=Outcoin Wallet
+Icon=electrum
+Name[en_US]=Outcoin Wallet
+Name=Outcoin Wallet
+Categories=Finance;Network;
+StartupNotify=true
+StartupWMClass=electrum
+Terminal=false
+Type=Application
+MimeType=x-scheme-handler/outcoin;x-scheme-handler/lightning;
+Actions=Testnet;
+Keywords=crypto;currency;OUT
+
+[Desktop Action Testnet]
+Exec=electrum --testnet %u
+Name=Testnet mode
