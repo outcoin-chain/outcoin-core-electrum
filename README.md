@@ -1,155 +1,265 @@
-# Outcoin - Lightweight Outcoin client
+# Outcoin Electrum Wallet
 
-```
-Licence: MIT Licence
-Author: Outcoin Development Team
-Language: Python (>= 3.10)
-Homepage: https://outcoin.org/
-```
+[![Build Status](https://github.com/outcoin-chain/outcoin-core-electrum/workflows/Build/badge.svg)](https://github.com/outcoin-chain/outcoin-core-electrum/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 
-[![Build Status](https://api.cirrus-ci.com/github/outcoin-chain/outcoin-core/outcoin-core.svg?branch=master)](https://cirrus-ci.com/github/outcoin-chain/outcoin-core/outcoin-core)
-[![Test coverage statistics](https://coveralls.io/repos/github/outcoin-chain/outcoin-core/outcoin-core/badge.svg?branch=master)](https://coveralls.io/github/outcoin-chain/outcoin-core/outcoin-core?branch=master)
-[![Help translate Outcoin online](https://d322cqt584bo4o.cloudfront.net/outcoin/localized.svg)](https://crowdin.com/project/outcoin)
+**Outcoin Electrum** is a lightweight Outcoin wallet based on the Electrum wallet framework, specifically designed for the Outcoin blockchain network.
 
+## 🚀 Features
 
-## Getting started
+- **Lightweight**: No blockchain download required - connects to Outcoin servers
+- **Secure**: Deterministic wallet generation with BIP39 seed phrases
+- **Multi-platform**: Available for Windows, macOS, Linux, and Android
+- **Hardware Wallet Support**: Compatible with Ledger, Trezor, and other hardware wallets
+- **Multi-signature**: Support for multi-signature wallets
+- **Lightning Network**: Built-in Lightning Network support (when available)
+- **Cold Storage**: Offline transaction signing capabilities
 
-_(If you've come here looking to simply run Outcoin,
-[you may download it here](https://outcoin.org/#download).)_
+## 📋 Requirements
 
-Outcoin itself is pure Python, and so are most of the required dependencies,
-but not everything. The following sections describe how to run from source, but here
-is a TL;DR:
+- **Python**: 3.10 or higher
+- **Operating System**: Windows 10+, macOS 10.14+, Linux (Ubuntu 18.04+), Android 8.0+
+- **Memory**: Minimum 512MB RAM
+- **Storage**: 100MB free space
 
-```
-$ sudo apt-get install libsecp256k1-dev
-$ OUTCOIN_ECC_DONT_COMPILE=1 python3 -m pip install --user ".[gui,crypto]"
-```
+## 🛠️ Installation
 
-### Not pure-python dependencies
+### Quick Start (Recommended)
 
-#### Qt GUI
+Download the latest release for your platform from the [Releases page](https://github.com/outcoin-chain/outcoin-core-electrum/releases).
 
-If you want to use the Qt interface, install the Qt dependencies:
-```
-$ sudo apt-get install python3-pyqt6
-```
+### From Source
 
-#### libsecp256k1
+#### Prerequisites
 
-For elliptic curve operations,
-[libsecp256k1](https://github.com/bitcoin-core/secp256k1)
-is a required dependency.
-
-If you "pip install" Outcoin, by default libsecp will get compiled locally,
-as part of the `outcoin-ecc` dependency. This can be opted-out of,
-by setting the `OUTCOIN_ECC_DONT_COMPILE=1` environment variable.
-For the compilation to work, besides a C compiler, you need at least:
-```
-$ sudo apt-get install automake libtool
-```
-If you opt out of the compilation, you need to provide libsecp in another way, e.g.:
-```
-$ sudo apt-get install libsecp256k1-dev
+**Ubuntu/Debian:**
+```bash
+sudo apt-get update
+sudo apt-get install python3 python3-pip python3-pyqt6 libsecp256k1-dev
 ```
 
-#### cryptography
-
-Due to the need for fast symmetric ciphers,
-[cryptography](https://github.com/pyca/cryptography) is required.
-Install from your package manager (or from pip):
-```
-$ sudo apt-get install python3-cryptography
+**macOS:**
+```bash
+brew install python3 qt6 libsecp256k1
 ```
 
-#### hardware-wallet support
+**Windows:**
+- Install Python 3.10+ from [python.org](https://www.python.org/downloads/)
+- Install Qt6 from [qt.io](https://www.qt.io/download)
 
-If you would like hardware wallet support,
-[see this](https://github.com/outcoin-chain/outcoin-docs/blob/master/hardware-linux.rst).
+#### Installation Steps
 
-
-### Running from tar.gz
-
-If you downloaded the official package (tar.gz), you can run
-Outcoin from its root directory without installing it on your
-system; all the pure python dependencies are included in the 'packages'
-directory. To run Outcoin from its root directory, just do:
-```
-$ ./run_electrum
+1. **Clone the repository:**
+```bash
+git clone https://github.com/outcoin-chain/outcoin-core-electrum.git
+cd outcoin-core-electrum
 ```
 
-You can also install Outcoin on your system, by running this command:
-```
-$ sudo apt-get install python3-setuptools python3-pip
-$ python3 -m pip install --user .
-```
-
-This will download and install the Python dependencies used by
-Outcoin instead of using the 'packages' directory.
-It will also place an executable named `electrum` in `~/.local/bin`,
-so make sure that is on your `PATH` variable.
-
-
-### Development version (git clone)
-
-_(For OS-specific instructions, see [here for Windows](contrib/build-wine/README_windows.md),
-and [for macOS](contrib/osx/README_macos.md))_
-
-Check out the code from GitHub:
-```
-$ git clone https://github.com/outcoin-chain/outcoin-core/outcoin-core.git
-$ cd outcoin-core
-$ git submodule update --init
+2. **Install dependencies:**
+```bash
+python3 -m pip install --user -e .
 ```
 
-Run install (this should install dependencies):
-```
-$ python3 -m pip install --user -e .
-```
-
-Create translations (optional):
-```
-$ sudo apt-get install gettext
-$ ./contrib/locale/build_locale.sh electrum/locale/locale electrum/locale/locale
+3. **Run the wallet:**
+```bash
+./run_electrum
 ```
 
-Finally, to start Outcoin:
-```
-$ ./run_electrum
-```
+### Docker Installation
 
-### Run tests
-
-Run unit tests with `pytest`:
-```
-$ pytest tests -v
+```bash
+docker pull outcoin-chain/outcoin-core-electrum:latest
+docker run -it --rm outcoin-chain/outcoin-core-electrum:latest
 ```
 
-To run a single file, specify it directly like this:
+## 🔧 Configuration
+
+### Network Settings
+
+Outcoin Electrum is pre-configured for the Outcoin network:
+
+- **Mainnet**: 
+  - RPC Port: 19205
+  - P2P Port: 19206
+  - DNS Seeders: Configured automatically
+- **Testnet**: 
+  - RPC Port: 19207
+  - P2P Port: 19208
+  - DNS Seeders: Configured automatically
+
+### Custom Server Configuration
+
+You can configure custom servers in the wallet settings or by editing the server configuration files in `electrum/chains/`.
+
+## 🏗️ Building from Source
+
+### Linux Build
+
+```bash
+# Install build dependencies
+sudo apt-get install python3-dev python3-pip python3-setuptools
+
+# Build the application
+python3 setup.py build
+
+# Create distribution
+python3 setup.py sdist
 ```
-$ pytest tests/test_bitcoin.py -v
+
+### Windows Build
+
+```bash
+# Install Visual Studio Build Tools
+# Install Python 3.10+
+
+# Build with PyInstaller
+pip install pyinstaller
+pyinstaller --onefile run_electrum
 ```
 
-## Creating Binaries
+### macOS Build
 
-- [Linux (tarball)](contrib/build-linux/sdist/README.md)
-- [Linux (AppImage)](contrib/build-linux/appimage/README.md)
-- [macOS](contrib/osx/README.md)
-- [Windows](contrib/build-wine/README.md)
-- [Android](contrib/android/Readme.md)
+```bash
+# Install Xcode Command Line Tools
+xcode-select --install
 
+# Build the application
+python3 setup.py build
 
-## Contributing
+# Create .app bundle
+python3 contrib/osx/build_osx.py
+```
 
-Any help testing the software, reporting or fixing bugs, reviewing pull requests
-and recent changes, writing tests, or helping with outstanding issues is very welcome.
-Implementing new features, or improving/refactoring the codebase, is of course
-also welcome, but to avoid wasted effort, especially for larger changes,
-we encourage discussing these on the issue tracker or IRC first.
+## 🧪 Testing
 
-Besides [GitHub](https://github.com/outcoin-chain/outcoin-core/outcoin-core),
-most communication about Outcoin development happens on Discord, in the
-`#outcoin` channel. The easiest way to participate on Discord is
-with the web client, [discord.com/outcoin-chain](https://discord.com/outcoin-chain).
+Run the test suite:
 
-Please improve translations on [Crowdin](https://crowdin.com/project/outcoin).
+```bash
+# Install test dependencies
+pip install pytest pytest-cov
+
+# Run all tests
+pytest tests/ -v
+
+# Run specific test file
+pytest tests/test_bitcoin.py -v
+
+# Run with coverage
+pytest tests/ --cov=electrum
+```
+
+## 📦 Creating Binaries
+
+### Linux AppImage
+```bash
+cd contrib/build-linux/appimage
+./build.sh
+```
+
+### Windows Executable
+```bash
+cd contrib/build-wine
+./build-electrum-git.sh
+```
+
+### macOS App Bundle
+```bash
+cd contrib/osx
+./build_osx.sh
+```
+
+### Android APK
+```bash
+cd contrib/android
+./build.sh
+```
+
+## 🔒 Security
+
+### Verifying Downloads
+
+Always verify the integrity of downloaded files:
+
+```bash
+# Download the release and signature
+wget https://github.com/outcoin-chain/outcoin-core-electrum/releases/download/v1.0.0/outcoin-electrum-1.0.0.tar.gz
+wget https://github.com/outcoin-chain/outcoin-core-electrum/releases/download/v1.0.0/outcoin-electrum-1.0.0.tar.gz.asc
+
+# Verify signature
+gpg --verify outcoin-electrum-1.0.0.tar.gz.asc
+```
+
+### Security Best Practices
+
+1. **Backup your seed phrase** in a secure location
+2. **Use hardware wallets** for large amounts
+3. **Keep your software updated** to the latest version
+4. **Verify download signatures** before installation
+5. **Use strong passwords** for wallet encryption
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
+
+### Development Setup
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature-name`
+3. Make your changes
+4. Add tests for new functionality
+5. Run the test suite: `pytest tests/`
+6. Commit your changes: `git commit -am 'Add feature'`
+7. Push to the branch: `git push origin feature-name`
+8. Submit a Pull Request
+
+### Code Style
+
+- Follow PEP 8 for Python code
+- Use meaningful variable and function names
+- Add docstrings for all public functions
+- Write unit tests for new features
+
+## 📞 Support
+
+### Getting Help
+
+- **Documentation**: [Wiki](https://github.com/outcoin-chain/outcoin-core-electrum/wiki)
+- **Issues**: [GitHub Issues](https://github.com/outcoin-chain/outcoin-core-electrum/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/outcoin-chain/outcoin-core-electrum/discussions)
+- **Discord**: [Outcoin Discord](https://discord.gg/outcoin-chain)
+
+### Reporting Bugs
+
+When reporting bugs, please include:
+
+1. Operating system and version
+2. Outcoin Electrum version
+3. Steps to reproduce the issue
+4. Error messages or logs
+5. Screenshots (if applicable)
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- **Electrum Team**: For the original Electrum wallet framework
+- **Bitcoin Core**: For cryptographic libraries and standards
+- **Outcoin Community**: For support and contributions
+
+## 📊 Network Information
+
+- **Algorithm**: Scrypt
+- **Block Time**: 60 seconds
+- **Total Supply**: 84,000,000 OUT
+- **Premine**: 0%
+- **Ticker**: OUT
+- **Website**: https://outcoin.org
+- **Explorer**: https://explorer.outcoin.org
+- **GitHub**: https://github.com/outcoin-chain
+
+---
+
+**⚠️ Disclaimer**: This software is provided "as is" without warranty. Always verify your transactions and keep your private keys secure.
