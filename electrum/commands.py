@@ -870,7 +870,7 @@ class Commands(Logger):
 
         arg:str:privkey:Private key. Type \'?\' to get a prompt.
         arg:str:destination:Bitcoin address, contact or alias
-        arg:str:fee:Transaction fee (absolute, in BTC)
+        arg:str:fee:Transaction fee (absolute, in OUT)
         arg:str:feerate:Transaction fee rate (in sat/vbyte)
         arg:int:imax:Maximum number of inputs
         arg:bool:nocheck:Do not verify aliases
@@ -934,8 +934,8 @@ class Commands(Logger):
         """Create an on-chain transaction.
 
         arg:str:destination:Bitcoin address, contact or alias
-        arg:decimal_or_max:amount:Amount to be sent (in BTC). Type '!' to send the maximum available.
-        arg:decimal:fee:Transaction fee (absolute, in BTC)
+        arg:decimal_or_max:amount:Amount to be sent (in OUT). Type '!' to send the maximum available.
+        arg:decimal:fee:Transaction fee (absolute, in OUT)
         arg:float:feerate:Transaction fee rate (in sat/vbyte)
         arg:str:from_addr:Source address (must be a wallet address; use sweep to spend from non-wallet address)
         arg:str:change_addr:Change address. Default is a spare address, or the source address if it's not in the wallet
@@ -967,9 +967,9 @@ class Commands(Logger):
                         nocheck=False, unsigned=False, rbf=True, password=None, locktime=None, addtransaction=False, wallet: Abstract_Wallet = None):
         """Create a multi-output transaction.
 
-        arg:json:outputs:json list of ["address", "amount in BTC"]
+        arg:json:outputs:json list of ["address", "amount in OUT"]
         arg:bool:rbf:Whether to signal opt-in Replace-By-Fee in the transaction (true/false)
-        arg:str:fee:Transaction fee (absolute, in BTC)
+        arg:str:fee:Transaction fee (absolute, in OUT)
         arg:str:feerate:Transaction fee rate (in sat/vbyte)
         arg:str:from_addr:Source address (must be a wallet address; use sweep to spend from non-wallet address)
         arg:str:change_addr:Change address. Default is a spare address, or the source address if it's not in the wallet
@@ -1341,7 +1341,7 @@ class Commands(Logger):
         The address will be considered as used after this operation.
         If no payment is received, the address will be considered as unused if the payment request is deleted from the wallet.
 
-        arg:decimal:amount:Requested amount (in btc)
+        arg:decimal:amount:Requested amount (in OUT)
         arg:str:memo:Description of the request
         arg:bool:force:Create new address beyond gap limit, if no more addresses are available.
         arg:bool:lightning:Create lightning request.
@@ -1377,7 +1377,7 @@ class Commands(Logger):
         HTLCs will get failed automatically if block_height + 144 > htlc.cltv_abs.
 
         arg:str:preimage:Hex encoded preimage to be used for the invoice
-        arg:decimal:amount:Optional requested amount (in btc)
+        arg:decimal:amount:Optional requested amount (in OUT)
         arg:str:memo:Optional description of the invoice
         arg:int:expiry:Optional expiry in seconds (default: 3600s)
         arg:int:min_final_cltv_expiry_delta:Optional min final cltv expiry delta (default: 294 blocks)
@@ -1669,8 +1669,8 @@ class Commands(Logger):
         Open a lightning channel with a peer
 
         arg:str:connection_string:Lightning network node ID or network address
-        arg:decimal_or_max:amount:funding amount (in BTC)
-        arg:decimal:push_amount:Push initial amount (in BTC)
+        arg:decimal_or_max:amount:funding amount (in OUT)
+        arg:decimal:push_amount:Push initial amount (in OUT)
         arg:bool:public:The channel will be announced
         arg:bool:zeroconf:request zeroconf channel
         """
@@ -1870,7 +1870,7 @@ class Commands(Logger):
 
         arg:str:from_scid:Short channel ID
         arg:str:dest_scid:Short channel ID
-        arg:decimal:amount:Amount (in BTC)
+        arg:decimal:amount:Amount (in OUT)
 
         """
         from .lnutil import ShortChannelID
@@ -1892,10 +1892,10 @@ class Commands(Logger):
     @command('wnpl')
     async def normal_swap(self, onchain_amount, lightning_amount, password=None, wallet: Abstract_Wallet = None):
         """
-        Normal submarine swap: send on-chain BTC, receive on Lightning
+        Normal submarine swap: send on-chain OUT, receive on Lightning
 
-        arg:decimal_or_dryrun:lightning_amount:Amount to be received, in BTC. Set it to 'dryrun' to receive a value
-        arg:decimal_or_dryrun:onchain_amount:Amount to be sent, in BTC. Set it to 'dryrun' to receive a value
+        arg:decimal_or_dryrun:lightning_amount:Amount to be received, in OUT. Set it to 'dryrun' to receive a value
+        arg:decimal_or_dryrun:onchain_amount:Amount to be sent, in OUT. Set it to 'dryrun' to receive a value
         """
         sm = wallet.lnworker.swap_manager
         with sm.create_transport() as transport:
@@ -1929,8 +1929,8 @@ class Commands(Logger):
         """
         Reverse submarine swap: send on Lightning, receive on-chain
 
-        arg:decimal_or_dryrun:lightning_amount:Amount to be sent, in BTC. Set it to 'dryrun' to receive a value
-        arg:decimal_or_dryrun:onchain_amount:Amount to be received, in BTC. Set it to 'dryrun' to receive a value
+        arg:decimal_or_dryrun:lightning_amount:Amount to be sent, in OUT. Set it to 'dryrun' to receive a value
+        arg:decimal_or_dryrun:onchain_amount:Amount to be received, in OUT. Set it to 'dryrun' to receive a value
         """
         sm = wallet.lnworker.swap_manager
         with sm.create_transport() as transport:
@@ -1975,9 +1975,9 @@ class Commands(Logger):
         to_ccy = to_ccy.upper()
         # Default currencies
         if from_ccy == '':
-            from_ccy = "BTC" if to_ccy != "BTC" else self.daemon.fx.ccy
+            from_ccy = "OUT" if to_ccy != "OUT" else self.daemon.fx.ccy
         if to_ccy == '':
-            to_ccy = "BTC" if from_ccy != "BTC" else self.daemon.fx.ccy
+            to_ccy = "OUT" if from_ccy != "OUT" else self.daemon.fx.ccy
         # Get current rates
         rate_from = self.daemon.fx.exchange.get_cached_spot_quote(from_ccy)
         rate_to = self.daemon.fx.exchange.get_cached_spot_quote(to_ccy)
