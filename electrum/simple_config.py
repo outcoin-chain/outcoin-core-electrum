@@ -616,8 +616,8 @@ class SimpleConfig(Logger):
     NETWORK_AUTO_CONNECT = ConfigVar(
         'auto_connect', default=True, type_=bool,
         short_desc=lambda: _('Select server automatically'),
-        long_desc=lambda: _("If auto-connect is enabled, Electrum will always use a server that is on the longest blockchain. "
-                            "If it is disabled, you have to choose a server you want to use. Electrum will warn you if your server is lagging."),
+                long_desc=lambda: _("If auto-connect is enabled, Outcoin will always use a server that is on the longest blockchain. "
+                             "If it is disabled, you have to choose a server you want to use. Outcoin will warn you if your server is lagging."),
     )
     NETWORK_ONESERVER = ConfigVar(
         'oneserver', default=False, type_=bool,
@@ -626,7 +626,7 @@ class SimpleConfig(Logger):
             "This is only intended for connecting to your own fully trusted server. "
             "Using this option on a public server is a security risk and is discouraged."
             "\n\n"
-            "By default, Electrum tries to maintain connections to ~10 servers. "
+            "By default, Outcoin tries to maintain connections to ~10 servers. "
             "One of these nodes gets selected to be the history server and will learn the wallet addresses. "
             "All the other nodes are *only* used for block header notifications. "
             "\n\n"

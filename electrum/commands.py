@@ -693,7 +693,7 @@ class Commands(Logger):
     @command('')
     async def dumpprivkeys(self):
         """Deprecated."""
-        return "This command is deprecated. Use a pipe instead: 'electrum listaddresses | electrum getprivatekeys - '"
+        return "This command is deprecated. Use a pipe instead: 'outcoin listaddresses | outcoin getprivatekeys - '"
 
     @command('')
     async def validateaddress(self, address):
@@ -757,7 +757,7 @@ class Commands(Logger):
 
     @command('')
     async def version(self):
-        """Return the version of Electrum."""
+        """Return the version of Outcoin."""
         return ELECTRUM_VERSION
 
     @command('')
@@ -1969,7 +1969,7 @@ class Commands(Logger):
         arg:decimal:to_ccy:Currency to convert to
         """
         if not self.daemon.fx.is_enabled():
-            raise UserFacingException("FX is disabled. To enable, run: 'electrum setconfig use_exchange_rate true'")
+            raise UserFacingException("FX is disabled. To enable, run: 'outcoin setconfig use_exchange_rate true'")
         # Currency codes are uppercase
         from_ccy = from_ccy.upper()
         to_ccy = to_ccy.upper()
@@ -2211,7 +2211,7 @@ def add_network_options(parser):
         help="do not try to connect to onion servers")
     group.add_argument(
         "--skipmerklecheck", action="store_true", dest=SimpleConfig.NETWORK_SKIPMERKLECHECK.key(), default=None,
-        help="Tolerate invalid merkle proofs from Electrum server")
+                                help="Tolerate invalid merkle proofs from Outcoin server")
 
 
 def add_global_options(parser, suppress=False):
@@ -2221,7 +2221,7 @@ def add_global_options(parser, suppress=False):
         help=argparse.SUPPRESS if suppress else "Set verbosity (log levels)")
     group.add_argument(
         "-D", "--dir", dest="electrum_path",
-        help=argparse.SUPPRESS if suppress else "electrum directory")
+                                help=argparse.SUPPRESS if suppress else "outcoin directory")
     group.add_argument(
         "-w", "--wallet", dest="wallet_path",
         help=argparse.SUPPRESS if suppress else "wallet path")
@@ -2260,7 +2260,7 @@ def get_simple_parser():
                     largs.append(e.opt_str)
 
     parser = PassThroughOptionParser()
-    parser.add_option("-D", "--dir", dest="electrum_path", help="electrum directory")
+            parser.add_option("-D", "--dir", dest="electrum_path", help="outcoin directory")
     parser.add_option("-P", "--portable", action="store_true", dest="portable", default=False, help="Use local 'electrum_data' directory")
     for chain in constants.NETS_LIST:
         parser.add_option(f"--{chain.cli_flag()}", action="store_true", dest=chain.config_key(), default=False, help=f"Use {chain.NET_NAME} chain")
@@ -2271,11 +2271,11 @@ def get_parser():
     # create main parser
     parser = argparse.ArgumentParser(
         epilog="Run 'electrum help <command>' to see the help for a command")
-    parser.add_argument("--version", dest="cmd", action='store_const', const='version', help="Return the version of Electrum.")
+            parser.add_argument("--version", dest="cmd", action='store_const', const='version', help="Return the version of Outcoin.")
     add_global_options(parser)
     subparsers = parser.add_subparsers(dest='cmd', metavar='<command>')
     # gui
-    parser_gui = subparsers.add_parser('gui', description="Run Electrum's Graphical User Interface.", help="Run GUI (default)")
+            parser_gui = subparsers.add_parser('gui', description="Run Outcoin's Graphical User Interface.", help="Run GUI (default)")
     parser_gui.add_argument("url", nargs='?', default=None, help="bitcoin URI (or bip70 file)")
     parser_gui.add_argument("-g", "--gui", dest=SimpleConfig.GUI_NAME.key(), help="select graphical user interface", choices=['qt', 'text', 'stdio', 'qml'])
     parser_gui.add_argument("-m", action="store_true", dest=SimpleConfig.GUI_QT_HIDE_ON_STARTUP.key(), default=False, help="hide GUI on startup")

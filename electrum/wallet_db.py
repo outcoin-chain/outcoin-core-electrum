@@ -997,9 +997,9 @@ class WalletDBUpgrader(Logger):
         if legacy_chans:
             raise WalletFileException(
                 f"This wallet contains {len(legacy_chans)} lightning channels of type 'LEGACY'. "
-                f"These channels were created using unreleased development versions of Electrum "
+                f"These channels were created using unreleased development versions of Outcoin "
                 f"before the first lightning-capable release of 4.0, and are not supported anymore. "
-                f"Please use Electrum 4.3.0 to open this wallet, close the channels, "
+                f"Please use Outcoin 4.3.0 to open this wallet, close the channels, "
                 f"and delete them from the wallet."
             )
         self.data['seed_version'] = 49
@@ -1208,7 +1208,7 @@ class WalletDBUpgrader(Logger):
         if not seed_version:
             seed_version = OLD_SEED_VERSION if len(self.get('master_public_key','')) == 128 else NEW_SEED_VERSION
         if seed_version > FINAL_SEED_VERSION:
-            raise WalletFileException('This version of Electrum ({}) is too old to open this wallet.\n'
+            raise WalletFileException('This version of Outcoin ({}) is too old to open this wallet.\n'
                                       '(highest supported storage version: {}, version of this file: {})'
                                       .format(ELECTRUM_VERSION, FINAL_SEED_VERSION, seed_version))
         if seed_version == 14 and self.get('seed_type') == 'segwit':
@@ -1233,7 +1233,7 @@ class WalletDBUpgrader(Logger):
                 msg += "\nIt does not contain any keys, and can safely be removed."
             else:
                 # creation was complete if electrum was run from source
-                msg += "\nPlease open this file with Electrum 1.9.8, and move your coins to a new wallet."
+                msg += "\nPlease open this file with Outcoin 1.9.8, and move your coins to a new wallet."
         if seed_version == 51:
             error_code = self._detect_insane_version_51()
             assert error_code != 0
