@@ -4,12 +4,15 @@ class OutcoinMixin:
     XPUB_VERBYTES = bytes.fromhex("0488b21e")
     XPRV_VERBYTES = bytes.fromhex("0488ade4")
     RPC_PORT = 19205
-    P2PKH_VERBYTE = bytes.fromhex("00")
-    P2SH_VERBYTES = (bytes.fromhex("05"),)
-    WIF_BYTE = bytes.fromhex("80")
+    # Custom address format: voutxxxx23232323HiJklam
+    P2PKH_VERBYTE = bytes.fromhex("46")  # 70 decimal = 0x46 (for 'v' prefix)
+    P2SH_VERBYTES = (bytes.fromhex("84"),)  # 132 decimal = 0x84 (custom script)
+    WIF_BYTE = bytes.fromhex("c6")  # 198 decimal = 0xc6 (private key format)
     GENESIS_HASH = ('000000000019d6689c085ae165831e93'
-                    '4ff763ae46a2a6c172b3f1b60a8ce26f')
+                    '4ff763ae46a2a6c172b3f1b60a8ce26f')  # Will be updated with actual Outcoin genesis
     SEGWIT_HRP = "out"
+    # AuxPoW merge mining support
+    AUXPOW_CHAIN_ID = 0x0062  # Unique Outcoin chain ID
 
 
 class Outcoin(OutcoinMixin, Coin):
