@@ -140,9 +140,10 @@ class OutcoinMainnet(AbstractNet):
 
     NET_NAME = "mainnet"
     TESTNET = False
-    WIF_PREFIX = 0x80
-    ADDRTYPE_P2PKH = 0
-    ADDRTYPE_P2SH = 5
+    # UPDATED: Custom address format support for voutxxxx23232323HiJklam
+    WIF_PREFIX = 0xc6           # Custom WIF prefix (198 decimal)
+    ADDRTYPE_P2PKH = 0x46       # Custom P2PKH prefix (70 decimal for 'v')
+    ADDRTYPE_P2SH = 0x84        # Custom P2SH prefix (132 decimal)
     SEGWIT_HRP = "out"
     BOLT11_HRP = SEGWIT_HRP
     GENESIS = "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f"
