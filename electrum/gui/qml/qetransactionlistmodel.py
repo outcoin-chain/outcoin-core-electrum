@@ -5,7 +5,7 @@ from PyQt6.QtCore import pyqtProperty, pyqtSignal, pyqtSlot
 from PyQt6.QtCore import Qt, QAbstractListModel, QModelIndex
 
 from electrum.logging import get_logger
-from electrum.util import Satoshis, TxMinedInfo
+from electrum.util import Outoshis, TxMinedInfo
 from electrum.address_synchronizer import TX_HEIGHT_FUTURE, TX_HEIGHT_LOCAL
 
 from .qetypes import QEAmount
@@ -110,7 +110,7 @@ class QETransactionListModel(QAbstractListModel, QtEventListener):
 
         if isinstance(value, (bool, list, int, str, QEAmount)) or value is None:
             return value
-        if isinstance(value, Satoshis):
+        if isinstance(value, Outoshis):
             return value.value
         return str(value)
 

@@ -49,11 +49,15 @@ from .i18n import _
 from .bip32 import BIP32Node, convert_bip32_intpath_to_strpath, convert_bip32_strpath_to_intpath
 from .logging import get_logger, Logger
 from .util import (
-    NotEnoughFunds, UserCancelled, profiler, OldTaskGroup, format_fee_satoshis,
-    WalletFileException, BitcoinException, InvalidPassword, format_time, timestamp_to_datetime,
-    Satoshis, Fiat, TxMinedInfo, quantize_feerate, OrderedDictWithIndex, multisig_type, parse_max_spend,
+    NotEnoughFunds, UserCancelled, profiler, OldTaskGroup, format_fee_outoshis,
+    format_fee_satoshis,  # keep for backward compatibility
+    Outoshis, Fiat, TxMinedInfo, quantize_feerate, OrderedDictWithIndex, multisig_type, parse_max_spend,
+    format_time, timestamp_to_datetime,
+    WalletFileException, BitcoinException, InvalidPassword,
     OnchainHistoryItem, read_json_file, write_json_file, UserFacingException, FileImportFailed, EventListener,
-    event_listener
+    event_listener,
+    format_satoshis, format_satoshis_plain, base_unit_name_to_decimal_point,
+
 )
 from .bitcoin import COIN, is_address, is_minikey, relayfee, dust_threshold, DummyAddress, DummyAddressUsedInTxException
 from .keystore import (
@@ -1424,9 +1428,9 @@ class Abstract_Wallet(ABC, Logger, EventListener):
         transactions = OrderedDictWithIndex()
         for k, tx_item in sorted(list(transactions_tmp.items()), key=sort_key):
             if 'ln_value' not in tx_item:
-                tx_item['ln_value'] = Satoshis(0)
+                tx_item['ln_value'] = Outoshis(0)
             if 'bc_value' not in tx_item:
-                tx_item['bc_value'] = Satoshis(0)
+                tx_item['bc_value'] = Outoshis(0)
             group_id = tx_item.get('group_id')
             if not group_id:
                 transactions[k] = tx_item
@@ -1438,9 +1442,9 @@ class Abstract_Wallet(ABC, Logger, EventListener):
                     parent = {
                         'label': group_label,
                         'fiat_value': Fiat(Decimal(0), fx.ccy) if fx else None,
-                        'bc_value': Satoshis(0),
-                        'ln_value': Satoshis(0),
-                        'value': Satoshis(0),
+                        'bc_value': Outoshis(0),
+                        'ln_value': Outoshis(0),
+                        'value': Outoshis(0),
                         'children': [],
                         'timestamp': 0,
                         'date': timestamp_to_datetime(0),
@@ -1473,9 +1477,9 @@ class Abstract_Wallet(ABC, Logger, EventListener):
                 transactions[key] = children[0]
             # add on-chain and lightning values
             # note: 'value' has msat precision (as LN has msat precision)
-            item['value'] = item.get('bc_value', Satoshis(0)) + item.get('ln_value', Satoshis(0))
+            item['value'] = item.get('bc_value', Outoshis(0)) + item.get('ln_value', Outoshis(0))
             for child in item.get('children', []):
-                child['value'] = child.get('bc_value', Satoshis(0)) + child.get('ln_value', Satoshis(0))
+                child['value'] = child.get('bc_value', Outoshis(0)) + child.get('ln_value', Outoshis(0))
             if include_fiat:
                 value = item['value'].value
                 txid = item.get('txid')
@@ -1561,7 +1565,7 @@ class Abstract_Wallet(ABC, Logger, EventListener):
                 out = {
                     'date': date,
                     'block_height': height,
-                    'BTC_balance': Satoshis(balance),
+                    'BTC_balance': Outoshis(balance),
                 }
                 if show_fiat:
                     ap = self.acquisition_price(coins, fx.timestamp_rate, fx.ccy)
@@ -1576,8 +1580,8 @@ class Abstract_Wallet(ABC, Logger, EventListener):
             summary_start = summary_point(start_timestamp, start_height, start_balance, start_coins)
             summary_end = summary_point(end_timestamp, end_height, end_balance, end_coins)
             flow = {
-                'BTC_incoming': Satoshis(income),
-                'BTC_outgoing': Satoshis(expenditures)
+                'BTC_incoming': Outoshis(income),
+                'BTC_outgoing': Outoshis(expenditures)
             }
             if show_fiat:
                 flow['fiat_currency'] = fx.ccy

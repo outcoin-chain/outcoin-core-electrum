@@ -43,7 +43,7 @@ from electrum.address_synchronizer import TX_HEIGHT_LOCAL
 from electrum.i18n import _
 from electrum.util import (block_explorer_URL, profiler, TxMinedInfo,
                            OrderedDictWithIndex, timestamp_to_datetime,
-                           Satoshis, format_time)
+                           Outoshis, format_time)
 from electrum.logging import get_logger, Logger
 from electrum.simple_config import SimpleConfig
 
@@ -315,7 +315,7 @@ class HistoryModel(CustomModel, Logger):
         balance = 0
         for node in self._root._children:
             balance += node._data['value'].value
-            node._data['balance'] = Satoshis(balance)
+            node._data['balance'] = Outoshis(balance)
 
         new_length = self._root.childCount()
         self.beginInsertRows(QModelIndex(), 0, new_length-1)

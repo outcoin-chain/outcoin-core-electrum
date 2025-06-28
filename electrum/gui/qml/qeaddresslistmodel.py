@@ -4,7 +4,7 @@ from PyQt6.QtCore import pyqtSlot, QSortFilterProxyModel, pyqtSignal, pyqtProper
 from PyQt6.QtCore import Qt, QAbstractListModel, QModelIndex
 
 from electrum.logging import get_logger
-from electrum.util import Satoshis
+from electrum.util import Outoshis
 from .qeconfig import QEConfig
 
 from .qetypes import QEAmount
@@ -151,7 +151,7 @@ class QEAddressCoinListModel(QAbstractListModel, QtEventListener):
             return None
         if isinstance(value, (bool, list, int, str, QEAmount)) or value is None:
             return value
-        if isinstance(value, Satoshis):
+        if isinstance(value, Outoshis):
             return value.value
         return str(value)
 

@@ -2,7 +2,7 @@ from PyQt6.QtCore import pyqtProperty, pyqtSignal, pyqtSlot
 from PyQt6.QtCore import Qt, QAbstractListModel, QModelIndex
 
 from electrum.logging import get_logger
-from electrum.util import Satoshis
+from electrum.util import Outoshis
 from electrum.interface import ServerAddr, PREFERRED_NETWORK_PROTOCOL
 from electrum import blockchain
 
@@ -57,7 +57,7 @@ class QEServerListModel(QAbstractListModel, QtEventListener):
 
         if isinstance(value, (bool, list, int, str)) or value is None:
             return value
-        if isinstance(value, Satoshis):
+        if isinstance(value, Outoshis):
             return value.value
         return str(value)
 

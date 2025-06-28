@@ -4,7 +4,7 @@ from PyQt6.QtCore import pyqtProperty, pyqtSignal, pyqtSlot
 from electrum.lnchannel import ChannelState
 from electrum.lnutil import LOCAL, REMOTE
 from electrum.logging import get_logger
-from electrum.util import Satoshis
+from electrum.util import Outoshis
 from electrum.gui import messages
 
 from .qetypes import QEAmount
@@ -74,7 +74,7 @@ class QEChannelListModel(QAbstractListModel, QtEventListener):
         value = tx[self._ROLE_NAMES[role_index]]
         if isinstance(value, (bool, list, int, str, QEAmount)) or value is None:
             return value
-        if isinstance(value, Satoshis):
+        if isinstance(value, Outoshis):
             return value.value
         return str(value)
 
