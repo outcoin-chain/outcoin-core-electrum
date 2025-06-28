@@ -2260,7 +2260,7 @@ def get_simple_parser():
                     largs.append(e.opt_str)
 
     parser = PassThroughOptionParser()
-            parser.add_option("-D", "--dir", dest="electrum_path", help="outcoin directory")
+    parser.add_option("-D", "--dir", dest="electrum_path", help="outcoin directory")
     parser.add_option("-P", "--portable", action="store_true", dest="portable", default=False, help="Use local 'electrum_data' directory")
     for chain in constants.NETS_LIST:
         parser.add_option(f"--{chain.cli_flag()}", action="store_true", dest=chain.config_key(), default=False, help=f"Use {chain.NET_NAME} chain")
@@ -2271,11 +2271,11 @@ def get_parser():
     # create main parser
     parser = argparse.ArgumentParser(
         epilog="Run 'electrum help <command>' to see the help for a command")
-            parser.add_argument("--version", dest="cmd", action='store_const', const='version', help="Return the version of Outcoin.")
+    parser.add_argument("--version", dest="cmd", action='store_const', const='version', help="Return the version of Outcoin.")
     add_global_options(parser)
     subparsers = parser.add_subparsers(dest='cmd', metavar='<command>')
     # gui
-            parser_gui = subparsers.add_parser('gui', description="Run Outcoin's Graphical User Interface.", help="Run GUI (default)")
+    parser_gui = subparsers.add_parser('gui', description="Run Outcoin's Graphical User Interface.", help="Run GUI (default)")
     parser_gui.add_argument("url", nargs='?', default=None, help="bitcoin URI (or bip70 file)")
     parser_gui.add_argument("-g", "--gui", dest=SimpleConfig.GUI_NAME.key(), help="select graphical user interface", choices=['qt', 'text', 'stdio', 'qml'])
     parser_gui.add_argument("-m", action="store_true", dest=SimpleConfig.GUI_QT_HIDE_ON_STARTUP.key(), default=False, help="hide GUI on startup")
