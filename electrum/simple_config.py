@@ -246,7 +246,7 @@ class SimpleConfig(Logger):
         if selected_chains:
             # note: if multiple are selected, we just pick one deterministically random
             return selected_chains[0]
-        return constants.BitcoinMainnet
+        return constants.OutcoinMainnet
 
     def electrum_path(self):
         path = self.electrum_path_root()

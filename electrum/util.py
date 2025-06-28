@@ -99,20 +99,31 @@ class UnknownBaseUnit(Exception): pass
 
 
 def decimal_point_to_base_unit_name(dp: int) -> str:
-    # e.g. 8 -> "BTC"
-    try:
-        return base_units_inverse[dp]
-    except KeyError:
-        raise UnknownBaseUnit(dp) from None
+    # e.g. 8 -> "OUT"
+    if dp == 8:
+        return "OUT"
+    elif dp == 5:
+        return "mOUT"
+    elif dp == 2:
+        return "cOUT"
+    elif dp == 0:
+        return "out"
+    else:
+        raise UnknownBaseUnit()
 
 
 def base_unit_name_to_decimal_point(unit_name: str) -> int:
-    """Returns the max number of digits allowed after the decimal point."""
-    # e.g. "BTC" -> 8
-    try:
-        return base_units[unit_name]
-    except KeyError:
-        raise UnknownBaseUnit(unit_name) from None
+    # e.g. "OUT" -> 8
+    if unit_name == "OUT":
+        return 8
+    elif unit_name == "mOUT":
+        return 5
+    elif unit_name == "cOUT":
+        return 2
+    elif unit_name == "out":
+        return 0
+    else:
+        raise UnknownBaseUnit()
 
 def parse_max_spend(amt: Any) -> Optional[int]:
     """Checks if given amount is "spend-max"-like.
@@ -238,21 +249,21 @@ def to_decimal(x: Union[str, float, int, Decimal]) -> Decimal:
 
 
 # note: this is not a NamedTuple as then its json encoding cannot be customized
-class Satoshis(object):
+class Outoshis(object):
     __slots__ = ('value',)
 
     def __new__(cls, value):
-        self = super(Satoshis, cls).__new__(cls)
+        self = super(Outoshis, cls).__new__(cls)
         # note: 'value' sometimes has msat precision
         assert isinstance(value, (int, Decimal)), f"unexpected type for {value=!r}"
         self.value = value
         return self
 
     def __repr__(self):
-        return f'Satoshis({self.value})'
+        return f'Outoshis({self.value})'
 
     def __str__(self):
-        # note: precision is truncated to satoshis here
+        # note: precision is truncated to outoshis here
         return format_satoshis(self.value)
 
     def __eq__(self, other):
@@ -262,7 +273,7 @@ class Satoshis(object):
         return not (self == other)
 
     def __add__(self, other):
-        return Satoshis(self.value + other.value)
+        return Outoshis(self.value + other.value)
 
 
 # note: this is not a NamedTuple as then its json encoding cannot be customized
@@ -318,7 +329,7 @@ class MyEncoder(json.JSONEncoder):
             return obj.serialize()
         if isinstance(obj, TxOutput):
             return obj.to_legacy_tuple()
-        if isinstance(obj, Satoshis):
+        if isinstance(obj, Outoshis):
             return str(obj)
         if isinstance(obj, Fiat):
             return str(obj)
@@ -789,9 +800,9 @@ def chunks(items, size: int):
 
 
 def format_satoshis_plain(
-        x: Union[int, float, Decimal, str],  # amount in satoshis,
+        x: Union[int, float, Decimal, str],  # amount in outoshis,
         *,
-        decimal_point: int = 8,  # how much to shift decimal point to left (default: sat->BTC)
+        decimal_point: int = 8,  # how much to shift decimal point to left (default: out->OUT)
 ) -> str:
     """Display a satoshi amount scaled.  Always uses a '.' as a decimal
     point and has no thousands separator"""
@@ -817,11 +828,11 @@ assert len(THOUSANDS_SEP) == 1, f"THOUSANDS_SEP has unexpected len. {THOUSANDS_S
 
 
 def format_satoshis(
-        x: Union[int, float, Decimal, str, None],  # amount in satoshis
+        x: Union[int, float, Decimal, str, None],  # amount in outoshis
         *,
         num_zeros: int = 0,
-        decimal_point: int = 8,  # how much to shift decimal point to left (default: sat->BTC)
-        precision: int = 0,  # extra digits after satoshi precision
+        decimal_point: int = 8,  # how much to shift decimal point to left (default: out->OUT)
+        precision: int = 0,  # extra digits after outoshi precision
         is_diff: bool = False,  # if True, enforce a leading sign (+/-)
         whitespaces: bool = False,  # if True, add whitespaces, to align numbers in a column
         add_thousands_sep: bool = False,  # if True, add whitespaces, for better readability of the numbers
@@ -871,15 +882,22 @@ def format_satoshis(
     return result
 
 
-FEERATE_PRECISION = 1  # num fractional decimal places for sat/byte fee rates
+FEERATE_PRECISION = 1  # num fractional decimal places for out/byte fee rates
 _feerate_quanta = Decimal(10) ** (-FEERATE_PRECISION)
-UI_UNIT_NAME_FEERATE_SAT_PER_VBYTE = "sat/vbyte"
-UI_UNIT_NAME_FEERATE_SAT_PER_VB = "sat/vB"
+UI_UNIT_NAME_FEERATE_SAT_PER_VBYTE = "out/vbyte"
+UI_UNIT_NAME_FEERATE_SAT_PER_VB = "out/vB"
 UI_UNIT_NAME_TXSIZE_VBYTES = "vbytes"
 UI_UNIT_NAME_MEMPOOL_MB = "vMB"
 
 
 def format_fee_satoshis(fee, *, num_zeros=0, precision=None):
+    if precision is None:
+        precision = FEERATE_PRECISION
+    num_zeros = min(num_zeros, FEERATE_PRECISION)  # no more zeroes than available prec
+    return format_satoshis(fee, num_zeros=num_zeros, decimal_point=0, precision=precision)
+
+
+def format_fee_outoshis(fee, *, num_zeros=0, precision=None):
     if precision is None:
         precision = FEERATE_PRECISION
     num_zeros = min(num_zeros, FEERATE_PRECISION)  # no more zeroes than available prec
@@ -2327,8 +2345,8 @@ class OnchainHistoryItem(NamedTuple):
             'timestamp': self.tx_mined_status.timestamp,
             'monotonic_timestamp': self.monotonic_timestamp,
             'incoming': True if self.amount_sat>0 else False,
-            'bc_value': Satoshis(self.amount_sat),
-            'bc_balance': Satoshis(self.balance_sat),
+            'bc_value': Outoshis(self.amount_sat),
+            'bc_balance': Outoshis(self.balance_sat),
             'date': timestamp_to_datetime(self.tx_mined_status.timestamp),
             'txpos_in_block': self.tx_mined_status.txpos,
             'wanted_height': self.tx_mined_status.wanted_height,
@@ -2358,7 +2376,7 @@ class LightningHistoryItem(NamedTuple):
             'payment_hash': self.payment_hash,
             'preimage': self.preimage,
             'group_id': self.group_id,
-            'ln_value': Satoshis(Decimal(self.amount_msat) / 1000),
+            'ln_value': Outoshis(Decimal(self.amount_msat) / 1000),
             'direction': self.direction,
         }
 

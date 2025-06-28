@@ -3,21 +3,19 @@
 # Note: This assumes $HOME/.local/bin is in your $PATH
 
 [Desktop Entry]
-Comment=Lightweight Outcoin Client
-Exec=electrum %u
-GenericName[en_US]=Outcoin Wallet
-GenericName=Outcoin Wallet
-Icon=electrum
-Name[en_US]=Outcoin Wallet
-Name=Outcoin Wallet
-Categories=Finance;Network;
-StartupNotify=true
-StartupWMClass=electrum
-Terminal=false
+Version=1.0
 Type=Application
-MimeType=x-scheme-handler/outcoin;x-scheme-handler/lightning;
-Actions=Testnet;
-Keywords=crypto;currency;OUT
+Name=Outcoin
+GenericName=Bitcoin Wallet
+Comment=Lightweight Outcoin client
+TryExec=outcoin
+Exec=outcoin %u
+Icon=outcoin
+Terminal=false
+Categories=Network;Finance;
+MimeType=x-scheme-handler/outcoin;
+StartupNotify=true
+StartupWMClass=outcoin
 
 [Desktop Action Testnet]
 Exec=electrum --testnet %u

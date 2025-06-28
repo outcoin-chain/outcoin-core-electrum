@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="131.96841mm"
+   height="131.96841mm"
+   viewBox="0 0 131.96841 131.96841"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="outcoin_dark_1.svg"
+   inkscape:export-filename="outcoin_dark_1.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   inkscape:version="1.4.2 (ebf0e940, 2025-05-08)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#505050"
+     bordercolor="#ffffff"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     inkscape:zoom="0.56690521"
+     inkscape:cx="158.7567"
+     inkscape:cy="334.27105"
+     inkscape:window-width="1280"
+     inkscape:window-height="628"
+     inkscape:window-x="0"
+     inkscape:window-y="37"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg1" />
+  <defs
+     id="defs1">
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipath_lpe_path-effect1-2-5-9">
+      <path
+         id="lpe_path-effect1-2-9-4"
+         style="fill:#ffffff;stroke-width:0.180994"
+         class="powerclip"
+         d="M 59.490082,33.295784 H 171.72874 V 145.53445 H 59.490082 Z M 150.89814,89.326462 A 34.969463,34.969463 0 0 0 115.92868,54.356998 34.969463,34.969463 0 0 0 80.959217,89.326462 34.969463,34.969463 0 0 0 115.92868,124.29593 34.969463,34.969463 0 0 0 150.89814,89.326462 Z" />
+    </clipPath>
+    <filter
+       style="color-interpolation-filters:sRGB"
+       id="filter1"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feColorMatrix
+         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 -0.21 -0.72 -0.07 2 0 "
+         result="fbSourceGraphic"
+         id="feColorMatrix1" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix2" />
+      <feColorMatrix
+         id="feColorMatrix3"
+         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 -0.21 -0.72 -0.07 2 0 "
+         result="color2"
+         in="fbSourceGraphic" />
+    </filter>
+  </defs>
+  <g
+     id="layer1"
+     transform="translate(-73.223889,-38.891944)">
+    <g
+       id="g12"
+       transform="matrix(1.8821962,0,0,1.8821962,-177.36782,-142.00859)"
+       style="filter:url(#filter1)">
+      <circle
+         style="fill:#ffcc00;stroke-width:0.264583"
+         id="path10"
+         cx="168.19496"
+         cy="131.16844"
+         r="35.05703" />
+      <g
+         id="g10-8-4"
+         transform="matrix(0.65336965,0,0,0.65336965,65.550793,53.645864)"
+         style="fill:#000000">
+        <g
+           id="g11"
+           transform="matrix(1.1057457,0.31897943,-0.31897943,1.1057457,19.807278,-60.745078)"
+           style="fill:#000000">
+          <path
+             id="path1-9-9-5"
+             transform="matrix(0.62243127,0,0,0.62243127,85.593811,60.920542)"
+             clip-path="url(#clipath_lpe_path-effect1-2-5-9)"
+             d="M 166.72874,89.415115 A 51.119331,51.119331 0 0 1 115.60941,140.53445 51.119331,51.119331 0 0 1 64.490082,89.415115 51.119331,51.119331 0 0 1 115.60941,38.295784 51.119331,51.119331 0 0 1 166.72874,89.415115 Z"
+             style="fill:#000000;stroke-width:0.264583" />
+          <g
+             id="g6-7-0"
+             transform="matrix(1,0,0,0.20828487,-2.1575599e-7,61.911568)"
+             style="fill:#000000">
+            <rect
+               style="fill:#000000;stroke-width:0.389886"
+               id="rect2-3-3"
+               width="9.8474798"
+               height="76.022552"
+               x="146.00134"
+               y="77.204247" />
+            <rect
+               style="fill:#000000;stroke-width:0.389886"
+               id="rect2-2-6-6"
+               width="9.8474798"
+               height="76.022552"
+               x="160.56638"
+               y="77.303238" />
+          </g>
+          <g
+             id="g6-9-1-1"
+             transform="matrix(1,0,0,0.20828487,-0.64229314,122.39726)"
+             style="fill:#000000">
+            <rect
+               style="fill:#000000;stroke-width:0.389886"
+               id="rect2-20-2-0"
+               width="9.8474798"
+               height="76.022552"
+               x="146.00134"
+               y="77.204247" />
+            <rect
+               style="fill:#000000;stroke-width:0.389886"
+               id="rect2-2-2-9-6"
+               width="9.8474798"
+               height="76.022552"
+               x="160.56638"
+               y="77.303238" />
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
